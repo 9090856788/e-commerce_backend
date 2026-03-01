@@ -1,21 +1,27 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
-import multer from "multer";
+import cookieParser from "cookie-parser";
 import dbConnect from "./db/dbConnect.js";
 
+const PORT = process.env.PORT || 3000;
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 
-const PORT = 3000;
 dbConnect();
 
 app.listen(PORT, () => {

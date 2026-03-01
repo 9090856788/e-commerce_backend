@@ -5,9 +5,7 @@ const dbConnect = async () => {
   try {
     // Attempt to connect to MongoDB using the URI from environment variables
     await mongoose
-      .connect(
-        "mongodb+srv://appseralabs_db_user:Appseralabs@cluster0.o09t5ji.mongodb.net/?appName=Cluster0",
-      )
+      .connect(process.env.MONGO_URI)
       .then(() => {
         console.log(`Database Connected Successfully :)`);
       })
